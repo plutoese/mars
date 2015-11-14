@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib.file.class_Excel &mdash; lib  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="lib  documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for lib.file.class_Excel</h1><div class="highlight"><pre>
+<span class="c"># coding=UTF-8</span>
+
+<span class="c">#-----------------------------------------------</span>
+<span class="c"># class_Excel文件</span>
+<span class="c"># @class: Excel类</span>
+<span class="c"># @introduction: Excel类用来读写Excel文件</span>
+<span class="c"># @dependency: xlrd, xlswriter</span>
+<span class="c"># @author: plutoese</span>
+<span class="c"># @date: 2015.10.17</span>
+<span class="c">#------------------------------------------------</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    filename = &#39;E:\\Data\\city\\variable\\m2012.xlsx&#39;</span>
+<span class="sd">    mexcel = Excel(filename)</span>
+<span class="sd">    mdata = mexcel.read()</span>
+<span class="sd">    print(mexcel.sheet)</span>
+<span class="sd">    print(mdata)</span>
+
+<span class="sd">    outfile = &#39;d:\\down\\demo.xlsx&#39;</span>
+<span class="sd">    moutexcel = Excel(outfile)</span>
+<span class="sd">    moutexcel.new().append(mdata)</span>
+<span class="sd">    moutexcel.close()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">xlrd</span>
+<span class="kn">import</span> <span class="nn">xlsxwriter</span>
+
+
+<div class="viewcode-block" id="Excel"><a class="viewcode-back" href="../../../lib.file.html#lib.file.class_Excel.Excel">[docs]</a><span class="k">class</span> <span class="nc">Excel</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;类Excel用来读写Excel文件。</span>
+
+<span class="sd">    :param str filename: 想要读写的文件名</span>
+<span class="sd">    :return: 无返回值</span>
+<span class="sd">    :var str filename: 文件名</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="c"># 设定文件名</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+<div class="viewcode-block" id="Excel.read"><a class="viewcode-back" href="../../../lib.file.html#lib.file.class_Excel.Excel.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;读取Excel文件的数据</span>
+
+<span class="sd">        :param int,str,list sheet: Excel工作表，可以使工作表号，也可以是工作表名。默认是None，代表所有的工作表。</span>
+<span class="sd">        :return: Excel工作表中所有数据</span>
+<span class="sd">        :rtype: listR</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># 连接文件</span>
+        <span class="k">with</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
+            <span class="c"># 如果sheet参数是None，读取所有工作表的数据</span>
+            <span class="k">if</span> <span class="n">sheet</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">sheets</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="c"># 类型检查及设置self.sheet</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">sheet_by_index</span><span class="p">(</span><span class="n">sheet</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">sheet_by_name</span><span class="p">(</span><span class="n">sheet</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sheet</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">sheet_by_index</span><span class="p">(</span>
+                            <span class="n">sheet_number</span><span class="p">)</span> <span class="k">for</span> <span class="n">sheet_number</span> <span class="ow">in</span> <span class="n">sheet</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sheet</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">sheet_by_name</span><span class="p">(</span>
+                            <span class="n">sheet_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">sheet_name</span> <span class="ow">in</span> <span class="n">sheet</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Your sheet list is not int or str!&#39;</span><span class="p">)</span>
+                        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Exception: &#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="p">)</span>
+                        <span class="k">raise</span> <span class="ne">TypeError</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Your sheet type is not int or str!&#39;</span><span class="p">)</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Exception: &#39;</span><span class="p">,</span> <span class="n">sheet</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span>
+
+            <span class="c"># 读取数据</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">single_sheet</span><span class="o">.</span><span class="n">row_values</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">single_sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">single_sheet</span><span class="o">.</span><span class="n">nrows</span><span class="p">)]</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+</div>
+<div class="viewcode-block" id="Excel.new"><a class="viewcode-back" href="../../../lib.file.html#lib.file.class_Excel.Excel.new">[docs]</a>    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;创建新的Excel文件</span>
+
+<span class="sd">        :param str filename: 新文件的名称</span>
+<span class="sd">        :return: 自身对象</span>
+<span class="sd">        :rtype: Excel Object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># 创建Workbook对象</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span> <span class="o">=</span> <span class="n">xlsxwriter</span><span class="o">.</span><span class="n">Workbook</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="Excel.append"><a class="viewcode-back" href="../../../lib.file.html#lib.file.class_Excel.Excel.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;写入数据到Excel文件的工作表</span>
+
+<span class="sd">        :param list data: 要写入Excel文件的数据</span>
+<span class="sd">        :param str sheet_name: 工作表的名称，缺省值为Sheet1</span>
+<span class="sd">        :return: 无返回值</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># 创建工作表</span>
+        <span class="k">if</span> <span class="n">sheet_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">add_worksheet</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">add_worksheet</span><span class="p">(</span><span class="n">sheet_name</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="Excel.close"><a class="viewcode-back" href="../../../lib.file.html#lib.file.class_Excel.Excel.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;关闭Excel文件</span>
+
+<span class="sd">        :return: 无返回值</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">r&#39;E:/data/testdata/excel_data.xls&#39;</span>
+    <span class="n">mexcel</span> <span class="o">=</span> <span class="n">Excel</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">mdata</span> <span class="o">=</span> <span class="n">mexcel</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mdata</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">mexcel</span><span class="o">.</span><span class="n">sheet</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">mdata</span><span class="p">)</span>
+
+    <span class="n">outfile</span> <span class="o">=</span> <span class="s">&#39;d:/down/demo.xlsx&#39;</span>
+    <span class="n">moutexcel</span> <span class="o">=</span> <span class="n">Excel</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="n">moutexcel</span><span class="o">.</span><span class="n">new</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mdata</span><span class="p">,</span><span class="s">&#39;mysheet&#39;</span><span class="p">)</span>
+    <span class="n">moutexcel</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
