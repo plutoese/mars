@@ -49,6 +49,15 @@ class Database:
             raise NameError
         return self.collection
 
+    def insert(self,record):
+        '''插入数据到Mongodb数据库中的集合
+
+        :param dict,list record: 数据记录
+        :return: None
+        '''
+        self.collection.insert(record)
+
+
 if __name__ == '__main__':
     db = Database()
     print(db.client.database_names())

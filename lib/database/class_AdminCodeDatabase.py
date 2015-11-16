@@ -4,7 +4,7 @@
 # class_AdminDatabase文件
 # @class: AdminDatabase类
 # @introduction: AdminDatabase类用来处理区域行政区划
-# @dependency: None
+# @dependency: pymongo，Database类
 # @author: plutoese
 # @date: 2015.10.17
 #------------------------------------------------
