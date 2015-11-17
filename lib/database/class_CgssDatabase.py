@@ -16,7 +16,6 @@ from pymongo import ASCENDING
 class CgssDatabase(Database):
 
     '''CgssDatabase类用来处理cgss数据
-
     '''
 
     def __init__(self):
