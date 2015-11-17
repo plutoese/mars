@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 # 读入stata文件
-df = pd.read_stata('e:/Data/micro/CGSS2010.dta',encoding='GBK',convert_categoricals =False, iterator=True)
+df = pd.read_stata('e:/Data/micro/CGSS2005_new.dta',encoding='GBK',convert_categoricals =False, iterator=True)
 
 # 变量
 variable_label = df.variable_labels()

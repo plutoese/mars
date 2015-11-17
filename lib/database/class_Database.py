@@ -15,8 +15,7 @@
     db.connect('regionDB','CEIC')
 '''
 
-from pymongo import MongoClient
-
+from pymongo import MongoClient,ASCENDING,IndexModel
 
 class Database:
     ''' Database类连接MongoDB数据库进行操作
@@ -53,9 +52,17 @@ class Database:
         '''插入数据到Mongodb数据库中的集合
 
         :param dict,list record: 数据记录
-        :return: None
+        :return: 无返回值
         '''
         self.collection.insert(record)
+
+    def create_index(self,indexes):
+        '''建立索引
+
+        :param IndexModel indexes: 索引条目
+        :return: 无返回值
+        '''
+        self.collection.create_indexes(indexes)
 
 
 if __name__ == '__main__':

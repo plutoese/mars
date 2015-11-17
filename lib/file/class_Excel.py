@@ -44,7 +44,7 @@ class Excel:
 
         :param int,str,list sheet: Excel工作表，可以使工作表号，也可以是工作表名。默认是None，代表所有的工作表。
         :return: Excel工作表中所有数据
-        :rtype: listR
+        :rtype: list
         '''
         # 连接文件
         with xlrd.open_workbook(self.filename) as self.file:

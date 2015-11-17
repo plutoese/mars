@@ -35,7 +35,7 @@ class CgssStataSheet:
     :var dict values_labels_dict: 值-标签字典
     '''
 
-    def __init__(self, filename, year=2013, encoding='GBK'):
+    def __init__(self, filename, year=None, encoding='GBK'):
         self.cgss_db = CgssDatabase()
 
         self.stata_object = Stata(filename, encoding=encoding)
@@ -67,9 +67,12 @@ class CgssStataSheet:
             record = dict({'year': self.year})
             # 读取一条记录
             row_data = data.iloc[i]
+
+            j = 0
             # 包装记录，即记录变量数据在字典record中
             # ind是行数据的索引（即变量）
             for ind in row_data.index:
+                j = j + 1
                 # 初始化值标签
                 value_label = None
                 # 变量-值标签变量
@@ -106,7 +109,7 @@ class CgssStataSheet:
                     print(ind)
                     print(value, type(value))
                     raise TypeError
-                record[ind] = {'label': self.variables_labels_dict[ind],
+                record[ind] = {'label': self.variables_labels_dict[ind], 'serial_number':j,
                                'value': {
                                    'value': value,
                                    'label': value_label
@@ -129,7 +132,7 @@ class CgssStataSheet:
 
 if __name__ == '__main__':
     filename = "E:/Data/micro/cgss2013.dta"
-    st = CgssStataSheet(filename)
+    st = CgssStataSheet(filename,year=2013)
     print(st.stata_file)
     print(st.variables_labels_dict)
     print(st.variables_values_labels_dict)
