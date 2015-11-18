@@ -116,19 +116,10 @@ class AdminData:
                     result = self.get_prefecture_children(key[0])
                     return self._sorted(result)
                 elif re.match(key[1], u's') is not None:
-                    prefectures = self.get_prefecture_children(key[0])
-                    result = []
-                    for item in prefectures:
-                        result.extend(self.get_county_children(
-                            key[0], item['region']))
+                    result = self.get_county_children(key[0],with_prefecture=False)
                     return self._sorted(result)
                 elif re.match(key[1], u'b') is not None:
-                    prefectures = self.get_prefecture_children(key[0])
-                    result = []
-                    for item in prefectures:
-                        result.append(item)
-                        result.extend(self.get_county_children(
-                            key[0], item['region']))
+                    result = self.get_county_children(key[0],with_prefecture=True)
                     return self._sorted(result)
                 else:
                     return self.get_prefecture_by_name(key[0], key[1])
@@ -178,10 +169,12 @@ class AdminData:
         :rtype: list
         '''
         prefectures = self.get_prefecture_children(province)
-        result = [item for item in prefectures if re.match(
+        result = [item for item in prefectures if re.fullmatch(
             prefecture, item['region']) is not None]
         if len(result) < 1:
-            return []
+            result = [item for item in prefectures if re.match(prefecture, item['region']) is not None]
+            if len(result) < 1:
+                return []
         return result
 
     # 获得一个县级单位
@@ -219,7 +212,7 @@ class AdminData:
                                         '_id'], version=self.version, sorts=[('acode', ASCENDING)])
         return list(prefecture)
 
-    def get_county_children(self, province, prefecture):
+    def get_county_children(self, province=None, prefecture=None,with_prefecture=False,without_prefecture=False):
         '''通过省级和地级区域名称获得其辖区下的所有县级行政区划
 
         :param str province: 省级行政区划名称
@@ -227,16 +220,33 @@ class AdminData:
         :return: 某个地级行政单位辖区下的所有县级区划单位
         :rtype: list
         '''
-        # to find province item
-        prefecture_found = self.get_prefecture_by_name(province, prefecture)
-        if len(prefecture_found) < 1:
-            print('Can not find ', province, '.', prefecture)
+        if province is None:
+            print('You must provide a Province Name')
             raise NameError
-        if len(prefecture_found) > 1:
-            print('Tow much: ', province, '.', prefecture)
-            raise NameError
-        county = self.database.find(parent=prefecture_found[0][
-                                    '_id'], version=self.version, sorts=[('acode', ASCENDING)])
+        if prefecture is None:
+            province_id = self.get_province_by_name(province)[0]['_id']
+            county = list()
+            prefectures = self.get_prefecture_children(province)
+            if len(prefectures) < 1:
+                print('There are no prefectures of : ', province)
+            if not without_prefecture:
+                for p in prefectures:
+                    if with_prefecture:
+                        county.append(p)
+                    county.extend(list(self.database.find(parent=p['_id'], version=self.version, sorts=[('acode', ASCENDING)])))
+            county.extend(list(self.database.find(grandpa=province_id)))
+        else:
+            # to find prefecture item
+            prefecture_found = self.get_prefecture_by_name(province, prefecture)
+            if len(prefecture_found) < 1:
+                print('Can not find ', province, '.', prefecture)
+                raise NameError
+            if len(prefecture_found) > 1:
+                print('Tow much: ', province, '.', prefecture)
+                print(prefecture_found)
+                raise NameError
+            county = self.database.find(parent=prefecture_found[0][
+                                        '_id'], version=self.version, sorts=[('acode', ASCENDING)])
         return list(county)
 
     # 设置版本
@@ -306,7 +316,7 @@ class AdminData:
 
 
 if __name__ == '__main__':
-    adata = AdminData(year=2004)
+    adata = AdminData(year=2005)
 
     print(adata.version)
     print(adata.Province)
@@ -321,8 +331,9 @@ if __name__ == '__main__':
     print(adata.ProvincePrefecture)
 
     print(adata[u'浙江', 'b'])
-    print(adata[u'浙江', u'嘉兴', u'孩孩'])
+    print(adata[u'浙江', u'嘉兴', u'f'])
 
-    adata.set_year(2010)
+    adata.set_year(2011)
     print(adata[tuple([u'浙江', u'f'])])
     print(adata[tuple([u'北京'])])
+    print(adata.get_county_children(province=u'浙江',with_prefecture=True))

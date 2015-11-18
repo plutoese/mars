@@ -90,7 +90,7 @@ if __name__ == '__main__':
     db = AdminCodeDatabase()
     print(db.collection)
     print(db.period)
-    print(db.version(year=2010))
+    print(db.version(year=2005))
     print(db.find())
     print(list(db.find(year='2010', projection={'region': 1, '_id': 0})))
     print(list(db.find(adminlevel=2, version='2004_12_31')))

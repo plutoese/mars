@@ -18,8 +18,12 @@ class CgssData:
         self.con = self.cgss_database.collection
 
     def questions(self,year=None):
-        pass
+        record = self.con.find_one({'year':year})
+
+        return record
 
 
 if __name__ == '__main__':
     cgss_data = CgssData()
+    print(cgss_data.questions(2005))
+

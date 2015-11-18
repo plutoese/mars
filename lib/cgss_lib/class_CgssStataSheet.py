@@ -1,13 +1,13 @@
 # coding=UTF-8
 
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 # class_CgssStataSheet文件
 # @class: CgssStataSheet类
 # @introduction: CgssStataSheet类用来读写cgss.dta（stata格式）的数据文件
 # @dependency: pymongo，numpy
 # @author: plutoese
 # @date: 2015.11.16
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 
 import re
 import numpy as np
@@ -19,8 +19,7 @@ from lib.file.class_Excel import Excel
 
 
 class CgssStataSheet:
-
-    '''类CgssStataSheet用来读写cgss.dta（stata格式）的数据文件
+    """类CgssStataSheet用来读写cgss.dta（stata格式）的数据文件
 
     :param str filename: 想要读写的文件名
     :param int year: 年份
@@ -33,7 +32,7 @@ class CgssStataSheet:
     :var dict variables_labels_dict: 变量-标签字典
     :var dict variables_values_labels_dict: 变量-值标签字典
     :var dict values_labels_dict: 值-标签字典
-    '''
+    """
 
     def __init__(self, filename, year=None, encoding='GBK'):
         self.cgss_db = CgssDatabase()
@@ -53,8 +52,8 @@ class CgssStataSheet:
         self.values_labels_dict = self.values_labels
 
     def insert(self):
-        '''insert方法用来插入数据到Mongodb数据库集合
-        '''
+        """insert方法用来插入数据到Mongodb数据库集合
+        """
         # 读入stata文件数据
         data = self.stata_object.read()
         # 数据行数
@@ -109,11 +108,11 @@ class CgssStataSheet:
                     print(ind)
                     print(value, type(value))
                     raise TypeError
-                record[ind] = {'label': self.variables_labels_dict[ind], 'serial_number':j,
+                record[ind] = {'label': self.variables_labels_dict[ind], 'serial_number': j,
                                'value': {
                                    'value': value,
                                    'label': value_label
-                }}
+                               }}
             print(i)
             print('record', record)
             self.cgss_db.collection.insert(record)
@@ -132,7 +131,7 @@ class CgssStataSheet:
 
 if __name__ == '__main__':
     filename = "E:/Data/micro/cgss2013.dta"
-    st = CgssStataSheet(filename,year=2013)
+    st = CgssStataSheet(filename, year=2013)
     print(st.stata_file)
     print(st.variables_labels_dict)
     print(st.variables_values_labels_dict)
