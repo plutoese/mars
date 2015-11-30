@@ -8,9 +8,9 @@ def index():
     title = u'世界上的另一个'
     return render_template('index.html',title=title)
 
-@app.route("/user/<name>")
-def user(name):
-    return '<h1>你好,%s!</h1>' % name
+@app.route("/hello")
+def hello():
+    return render_template('hello.html')
 
 if __name__ == "__main__":
     app.run()
