@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="../static/css/jquery.tree-multiselect.min.css">
+    <script type="text/javascript" src="/static/js/jquery.tree-multiselect.min.js"></script>
+</head>
+<body>
+    <select id="demo2">
+        <option value="blueberry" data-section="Smoothies">Blueberry</option>
+        <option value="strawberry" data-section="Smoothies">Strawberries</option>
+        <option value="Peach" data-section="Smoothies">Peach</option>
+        <option value="Bubble Tea" data-section="Smoothies">Bubble Tea</option>
+        <option value="milk tea" data-section="Smoothies/水果下属">Milk Tea</option>
+        <option value="green apple" data-section="Smoothies/水果下属">Green Apple</option>
+        <option value="passion fruit" data-section="Smoothies/水果下属">Passion Fruit</option>
+    </select>
+    <script>
+        var options = { onlyBatchSelection  : true };
+        $("select#demo2").treeMultiselect(options);
+    </script>
+</body>
+</html>
