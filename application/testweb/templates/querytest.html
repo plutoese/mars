@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="../static/css/multiple-select.css">
+    <link rel="stylesheet" href="../static/css/jquery.tree-multiselect.min.css">
+    <link rel="stylesheet" href="../static/css/searchableOptionList.css">
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+
+    <title>数据搜索</title>
+</head>
+    <div class="container">
+        <h3>欢迎使用区域数据查询！</h3>
+        <br>
+        <br>
+        <form method="POST">
+            <div class="form-group">
+                <label for="period">时间</label>
+                <select id="period" name="period" multiple="multiple">
+                    {% for year in period %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
+        </form>
+    </div>
+    <script type="text/javascript" src="/static/js/multiple-select.js"></script>
+    <script>
+        var treeOptions = { onlyBatchSelection  : true };
+        $("select#period").multipleSelect({
+            placeholder: "年份",
+            width: 180
+        });
+    </script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

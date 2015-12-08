@@ -337,3 +337,4 @@ if __name__ == '__main__':
     print(adata[tuple([u'浙江', u'f'])])
     print(adata[tuple([u'北京'])])
     print(adata.get_county_children(province=u'浙江',with_prefecture=True))
+

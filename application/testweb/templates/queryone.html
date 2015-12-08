@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="../static/css/multiple-select.css">
+    <link rel="stylesheet" href="../static/css/jquery.tree-multiselect.min.css">
+    <link rel="stylesheet" href="../static/css/searchableOptionList.css">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <title>数据搜索</title>
+</head>
+<body>
+    <form>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="region">区域</label>
+                    <select id="region" name="region">
+                        <option value="blueberry" data-section="Smoothies">Blueberry</option>
+                        <option value="strawberry" data-section="Smoothies">Strawberries</option>
+                        <option value="Peach" data-section="Smoothies">Peach</option>
+                        <option value="Bubble Tea" data-section="Smoothies">Bubble Tea</option>
+                        <option value="milk tea" data-section="Smoothies/水果下属">Milk Tea</option>
+                        <option value="green apple" data-section="Smoothies/水果下属">Green Apple</option>
+                        <option value="passion fruit" data-section="Smoothies/水果下属">Passion Fruitdddddddddd</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="period">时间</label>
+                    <select id="period" name="period" multiple="multiple">
+                        <option value="1">January</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="variable">变量</label>
+                    <select id="variable" name="variable" multiple="multiple">
+                        <optgroup label="The Griffins">
+                            <option value="Peter">Peter Griffin</option>
+                            <option value="Lois">Lois Griffin</option>
+                            <option value="Chris">Chris Griffin</option>
+                            <option value="Meg">Meg Griffin</option>
+                            <option value="Stewie">Stewie Griffin</option>
+                        </optgroup>
+                        <optgroup label="Peter's Friends">
+                            <option value="Cleveland">Cleveland Brown</option>
+                            <option value="Joe">Joe Swanson</option>
+                            <option value="Quagmire">Glenn Quagmire</option>
+                        </optgroup>
+                        <option value="Evil Monkey">Evil Monkey</option>
+                        <option value="Herbert">John Herbert</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="justdoit" method="POST">提交</button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript" src="/static/js/multiple-select.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.tree-multiselect.min.js"></script>
+    <script type="text/javascript" src="/static/js/sol.js"></script>
+    <script>
+        var treeOptions = { onlyBatchSelection  : true };
+        $("select#period").multipleSelect({
+            placeholder: "年份",
+            width: 180
+        });
+        $("select#region").treeMultiselect({
+            onlyBatchSelection: true,
+            hideSidePanel: true
+        });
+        $("select#variable").searchableOptionList({
+            showSelectAll: true,
+            maxHeight: '250px'
+        });
+    </script>
+</body>
+</html>

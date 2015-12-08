@@ -17,7 +17,9 @@
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="navbar.css" rel="stylesheet">
-
+    <script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
     <title>数据搜索</title>
 </head>
     <div class="container">
@@ -131,6 +133,12 @@
         $("select#variable").searchableOptionList({
             showSelectAll: true,
             maxHeight: '250px'
+        });
+        $("select#period").on('change',function(e){
+            $.getJSON($SCRIPT_ROOT + '/newvars', {
+            mperiod: $("select#period").find("option:selected").val()}, function(data) {
+            $("select#variable").value(data.result);
+          });
         });
     </script>
     <!-- Placed at the end of the document so the pages load faster -->
