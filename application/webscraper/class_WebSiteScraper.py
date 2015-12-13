@@ -4,7 +4,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
-class SiteScraper:
+class WebSiteScraper:
     """用来抓取网站数据
     """
     def __init__(self,website=None):
@@ -20,14 +20,13 @@ class SiteScraper:
 
         for link in bsObj.findAll("a", href=re.compile(condtion)):
             if 'href' in link.attrs:
-                if link.attrs['href'] not in self.pages:
-                    # We have encountered a new page
-                    newPage = link.attrs['href']
-                    newPage = re.sub('\.\./','',newPage)
+                newPage = link.attrs['href']
+                newPage = re.sub('\.\./','',newPage)
+                if newPage not in self.pages:
                     print(newPage)
                     self.pages.add(newPage)
                     self.get_links(newPage,condtion)
 
 if __name__ == '__main__':
-    site_scraper = SiteScraper("http://www.cuaa.net/")
+    site_scraper = WebSiteScraper("http://www.cuaa.net/")
     site_scraper.get_links(page_url="cur/",condtion="cur/")

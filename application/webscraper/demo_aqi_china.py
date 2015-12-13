@@ -2,7 +2,6 @@
 
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import chardet
 import re
 
 html = urlopen("http://www.tianqihoubao.com/aqi/shanghai.html")
