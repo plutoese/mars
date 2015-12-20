@@ -1,0 +1,342 @@
+[INFO  - 2015-12-16T06:45:16.343Z] GhostDriver - Main - running on port 55902
+[INFO  - 2015-12-16T06:45:17.136Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2015-12-16T06:45:17.137Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.customHeaders:  - {}
+[INFO  - 2015-12-16T06:45:17.137Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.0.0","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"windows-8-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-12-16T06:45:17.137Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 9148bde0-a3c0-11e5-b909-d3582d249668
+[ERROR - 2015-12-16T06:49:29.574Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.575Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  (anonymous function) (http://gkcx.eol.cn/static/jquery/jquery.cookie.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.577Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.578Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_tabs.js:44)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.579Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.579Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_picFocus.js:63)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.581Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.581Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_index.js:163)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.583Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.584Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/gkcx_ctrl.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.655Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.656Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3698&scoreSign=3:84)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.658Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.659Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3698&scoreSign=3:137)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.660Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.660Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/querySchoolTr.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.665Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.665Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_queryProvinceScore.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.666Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.666Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_contain.js:5)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.668Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.668Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolHeader.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.676Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.676Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/query2015.js:331)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.676Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.676Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3698&scoreSign=3:177)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.687Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.687Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolFooter.js:10)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.688Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:29.688Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/script/adCount/adCount.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.006Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.006Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  (anonymous function) (http://gkcx.eol.cn/static/jquery/jquery.cookie.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.006Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.006Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_tabs.js:44)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.007Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.007Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_picFocus.js:63)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.007Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.007Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_index.js:163)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.008Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.008Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/gkcx_ctrl.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.058Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.059Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3699&scoreSign=3:84)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.061Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.061Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3699&scoreSign=3:137)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.062Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.062Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/querySchoolTr.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.065Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.065Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_queryProvinceScore.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.066Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.066Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_contain.js:5)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.067Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.067Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolHeader.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.074Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.074Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/query2015.js:331)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.074Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.075Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3699&scoreSign=3:177)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.084Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.084Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolFooter.js:10)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.084Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:35.085Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/script/adCount/adCount.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.621Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.622Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  (anonymous function) (http://gkcx.eol.cn/static/jquery/jquery.cookie.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.623Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.623Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_tabs.js:44)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.624Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.625Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_picFocus.js:63)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.626Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.626Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/jQuery_index.js:163)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.627Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.628Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/static/js/gkcx_ctrl.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.642Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.642Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3700&scoreSign=3:84)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.646Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.647Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3700&scoreSign=3:137)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.648Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.649Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/querySchoolTr.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.652Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.653Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_queryProvinceScore.js:1)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.654Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.654Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/soudaxue_contain.js:5)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.656Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.656Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolHeader.js:14)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.669Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: jQuery
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.670Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/js/query2015.js:331)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.671Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.671Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/soudaxue/queryProvinceScore.html?page=3700&scoreSign=3:177)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.689Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.689Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/schoolhtm/sysschoolFooter.js:10)
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.690Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: $
+
+  :262 in error
+[ERROR - 2015-12-16T06:49:40.690Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  global code (http://gkcx.eol.cn/script/adCount/adCount.js:1)
+
+  :262 in error
+[INFO  - 2015-12-16T06:50:16.338Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T06:55:16.347Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:00:23.027Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:05:23.033Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:10:23.038Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:15:23.038Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:20:23.038Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[ERROR - 2015-12-16T07:23:40.934Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - msg: ReferenceError: Can't find variable: getRightAD
+
+  :262 in error
+[ERROR - 2015-12-16T07:23:40.935Z] Session [9148bde0-a3c0-11e5-b909-d3582d249668] - page.onError - stack:
+  getADZhaoDaXueMessage (http://gkcx.eol.cn/soudaxue/js/soudaxue_queryProvinceScore.js:132)
+  success (http://gkcx.eol.cn/soudaxue/js/soudaxue_queryProvinceScore.js:495)
+  l (http://gkcx.eol.cn/static/jquery/jquery-1.8.3.min.js:2)
+  fireWith (http://gkcx.eol.cn/static/jquery/jquery-1.8.3.min.js:2)
+  T (http://gkcx.eol.cn/static/jquery/jquery-1.8.3.min.js:2)
+  onreadystatechange (http://gkcx.eol.cn/static/jquery/jquery-1.8.3.min.js:2)
+
+  :262 in error
+[INFO  - 2015-12-16T07:25:23.047Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:30:23.048Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-12-16T07:35:38.200Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW

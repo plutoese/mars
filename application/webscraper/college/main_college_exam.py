@@ -7,9 +7,10 @@ import time
 import pickle
 
 # 0. set up parameters
-START = 869
+START = 3686
 STOP = 5000
-PhantomJS_path = 'D:/Tools/phantomjs-2.0.0-windows/bin/phantomjs'
+#PhantomJS_path = 'D:/Tools/phantomjs-2.0.0-windows/bin/phantomjs'
+PhantomJS_path = 'D:/software/phantomjs-2.0.0-windows/bin/phantomjs'
 DRIVER = webdriver.PhantomJS(executable_path=PhantomJS_path)
 
 # 1. load website
