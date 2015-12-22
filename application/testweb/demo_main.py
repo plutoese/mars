@@ -139,7 +139,12 @@ def add_numbers():
     """Add two numbers server side, ridiculous but well..."""
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
+    #result = a + b
     return jsonify(result=a + b)
+
+@app.route('/ajaxtwo', methods=['POST','GET'])
+def ajaxtwo():
+    return render_template('ajaxtwo.html')
 
 @app.route("/form", methods=['GET', 'POST'])
 def login():
