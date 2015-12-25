@@ -1,11 +1,17 @@
 # coding=UTF-8
 
+import os
 from lib.database.class_Database import Database
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from application.DataWarehouse.data.class_regiondata import RegionData
 import json
+from bokeh.plotting import figure
+from bokeh.embed import components
+from werkzeug.utils import secure_filename
+import flask.ext.login as flask_login
 
 app = Flask(__name__)
+app.secret_key = 'super secret string'  # Change this!
 
 # 创建初始数据
 # 导入CEIC数据
@@ -16,6 +22,110 @@ period = range(1990,2015)
 region_list = json.load(open('e:/gitwork/application/testweb/region_ceic.txt'))
 variables = con.find().distinct('variable')
 rdata = RegionData()
+# Our mock database.
+users = {'glen.zhang7@gmail.com': {'pw': '123456'}}
+
+# prepare some data
+x = [1, 2, 3, 4, 5]
+y = [6, 7, 2, 4, 5]
+# create a new plot with a title and axis labels
+p = figure(title="simple line example", x_axis_label='x', y_axis_label='y')
+# add a line renderer with legend and line thickness
+p.line(x, y, legend="Temp.", line_width=2)
+script, div = components(p)
+
+UPLOAD_FOLDER = 'd:/temp'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','xlsx'])
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
+class User(flask_login.UserMixin):
+    pass
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@login_manager.user_loader
+def user_loader(email):
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+    return user
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+
+    # DO NOT ever store passwords in plaintext and always compare password
+    # hashes using constant-time comparison!
+    user.is_authenticated = request.form['pw'] == users[email]['pw']
+
+    return user
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return '''
+               <form action='login' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'></input>
+                <input type='password' name='pw' id='pw' placeholder='password'></input>
+                <input type='submit' name='submit'></input>
+               </form>
+               '''
+
+    email = request.form['email']
+    if request.form['pw'] == users[email]['pw']:
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return redirect(url_for('protected'))
+
+    return 'Bad login'
+
+@app.route('/protected')
+@flask_login.login_required
+def protected():
+    return 'Logged in as: ' + flask_login.current_user.id
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out'
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            project_name = u'创数据'
+            company_date = u'华东理工大学商学院 2015'
+            return render_template('index.html',project_name=project_name,company_date=company_date)
+
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
 
 @app.route("/")
 def index():
@@ -33,6 +143,10 @@ def query():
         #print(period_chosen)
         #print(variables_chosen)
     return render_template('query.html',period=period,regions=region_list,variables=variables)
+
+@app.route("/bokeh")
+def bokeh():
+    return render_template('bokehtest.html',script=script,div=div)
 
 @app.route("/querytest",methods=['GET','POST'])
 def querytest():
@@ -147,7 +261,7 @@ def ajaxtwo():
     return render_template('ajaxtwo.html')
 
 @app.route("/form", methods=['GET', 'POST'])
-def login():
+def form():
     if request.method == 'POST':
         name = request.form['name']
         print(name)
