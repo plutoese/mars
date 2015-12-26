@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="十一维数据平台">
+    <meta name="author" content="plutoese">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="/flaskweb/static/css/multiple-select.css">
+    <link rel="stylesheet" href="/flaskweb/static/css/jquery.tree-multiselect.min.css">
+    <link rel="stylesheet" href="/flaskweb/static/css/searchableOptionList.css">
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+
+    <title>省级区域数据查询</title>
+</head>
+
+<body>
+    <div class="container">
+
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">十一维数据平台</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="{{ url_for('myapp.updatedlog') }}">首页</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">全国数据</a></li>
+                  <li><a href="#">省级数据</a></li>
+                  <li><a href="#">地级数据</a></li>
+                  <li><a href="#">县级数据</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">城市数据</a></li>
+                    <li><a href="#">混合区域数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">微观数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">CGSS数据</a></li>
+                  <li><a href="#">CHIPS数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">企业数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">工业企业数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定制数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">城市空气质量</a></li>
+                  <li><a href="#">大学高考录取线</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据分析工具箱<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">探索性数据分析</a></li>
+                  <li><a href="#">空间数据可视化</a></li>
+                  <li role="separator" class="divider"></li>
+                    <li><a href="#">机器学习</a></li>
+                    <li><a href="#">空间回归模型</a></li>
+                    <li><a href="#">计量回归模型</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="../navbar-static-top/">帮助文档</a></li>
+              <li><a href="../navbar-static-top/">上传数据</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+    </div> <!-- /container -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+         <ul class="nav nav-pills nav-stacked">
+          <br>
+            <h4>数据查询步骤 <span class="label label-default">重要</span></h4>
+              <dl>
+                <dt>1. 选择时期</dt>
+                <dd>通过下列菜单勾选感兴趣的年份，年份选择可以不连续。</dd>
+              </dl>
+              <dl>
+                <dt>2. 选择省份</dt>
+                <dd>在树形菜单中勾选感兴趣的省份，选择结果在右框中的显示。</dd>
+              </dl>
+              <dl>
+                <dt>3. 选择变量</dt>
+                <dd>通过下列菜单选择变量，可以通过输入关键字缩小选择的范围。</dd>
+              </dl>
+          </ul>
+        </div>
+        <div class="col-md-9">
+        <h3>欢迎使用省级数据查询！</h3>
+          <br>
+          <form method="POST">
+              <div class="form-group">
+                  <label for="period">时间</label>
+                  <select id="period" name="period" multiple="multiple">
+                      {% for year in period %}
+                          <option value="{{ year }}">{{ year }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <br>
+
+              <div class="form-group">
+                  <label for="region">区域</label>
+                  <select id="region" name="region">
+                      {% for region in regions %}
+                          <option value="{{ region[0] }}" data-section="{{ region[1] }}">{{ region[2] }}</option>
+                      {% endfor %}
+                      </select>
+              </div>
+              <br>
+
+              <div class="form-group">
+                  <label for="variable">变量</label>
+                  <select id="variable" name="variable" multiple="multiple">
+                      {% for var in variables %}
+                          <option value="{{ var }}">{{ var }}</option>
+                      {% endfor %}
+                      <optgroup label="The Griffins">
+                          <option value="Peter">Peter Griffin</option>
+                          <option value="Lois">Lois Griffin</option>
+                          <option value="Chris">Chris Griffin</option>
+                          <option value="Meg">Meg Griffin</option>
+                          <option value="Stewie">Stewie Griffin</option>
+                      </optgroup>
+                      <optgroup label="Peter's Friends">
+                          <option value="Cleveland">Cleveland Brown</option>
+                          <option value="Joe">Joe Swanson</option>
+                          <option value="Quagmire">Glenn Quagmire</option>
+                      </optgroup>
+                      <option value="Evil Monkey">Evil Monkey</option>
+                      <option value="Herbert">John Herbert</option>
+                  </select>
+              </div>
+              <button type="button" class="btn btn-primary">提交</button>
+          </form>
+        </div>
+      </div>
+      <hr>
+
+      <footer>
+        <p>&copy; 华东理工商学院 2015</p>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../flaskweb/static/js/multiple-select.js"></script>
+    <script type="text/javascript" src="../flaskweb/static/js/jquery.tree-multiselect.min.js"></script>
+    <script type="text/javascript" src="../flaskweb/static/js/sol.js"></script>
+    <script>
+        var treeOptions = { onlyBatchSelection  : true };
+        $("select#period").multipleSelect({
+            placeholder: "年份",
+            width: 180
+        });
+        $("select#region").treeMultiselect({
+               startCollapsed : true
+        });
+        $("select#variable").searchableOptionList({
+            showSelectAll: true,
+            maxHeight: '250px'
+        });
+    </script>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
