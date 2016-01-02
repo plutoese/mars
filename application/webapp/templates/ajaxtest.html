@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/multiple-select.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/bootstrap-treeview.min.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <title>jQuery</title>
+  </head>
+  <body>
+    <div class="container">
+
+        <div class="col-md-9">
+        <h3>欢迎使用省级数据查询！</h3>
+          <br>
+          <form method="POST">
+              <div class="form-group">
+                  <label for="period">时期</label>
+                  <select id="period" name="period" multiple="multiple">
+                      {% for year in period %}
+                          <option value="{{ year }}">{{ year }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <br>
+
+              <div class="form-group">
+                  <label for="region">区域</label>
+                  <div id="region" class="region"></div>
+                  <button type="button" class="btn btn-success" id="region_done" disabled="disabled">区域选择完毕</button>
+              </div>
+              <br>
+              <div id = "variable_form">
+                  <div class="form-group" data-sol-name="character" id="variable_area">
+                      <label for="variable">变量</label>
+                      <select id="variable" name="variable" multiple="multiple">
+                      </select>
+                  </div>
+              </div>
+              <input type="hidden" name="hregion" id="hregion" value="" />
+              <button type="submit" class="btn btn-success" id="to_be_submit" disabled="disabled">提交</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-dataquery.js"}}"></script>
+  </body>
+</html>
