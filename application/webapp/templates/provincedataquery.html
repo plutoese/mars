@@ -9,13 +9,16 @@
     <meta name="author" content="plutoese">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <link rel="stylesheet" href="/flaskweb/static/css/multiple-select.css">
-    <link rel="stylesheet" href="/flaskweb/static/css/jquery.tree-multiselect.min.css">
-    <link rel="stylesheet" href="/flaskweb/static/css/searchableOptionList.css">
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/multiple-select.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/bootstrap-treeview.min.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 
     <title>省级区域数据查询</title>
 </head>
@@ -111,12 +114,13 @@
               </dl>
           </ul>
         </div>
+
         <div class="col-md-9">
-        <h3>欢迎使用省级数据查询！</h3>
+          <h3>欢迎使用省级数据查询！</h3>
           <br>
           <form method="POST">
               <div class="form-group">
-                  <label for="period">时间</label>
+                  <label for="period">时期</label>
                   <select id="period" name="period" multiple="multiple">
                       {% for year in period %}
                           <option value="{{ year }}">{{ year }}</option>
@@ -127,37 +131,19 @@
 
               <div class="form-group">
                   <label for="region">区域</label>
-                  <select id="region" name="region">
-                      {% for region in regions %}
-                          <option value="{{ region[0] }}" data-section="{{ region[1] }}">{{ region[2] }}</option>
-                      {% endfor %}
-                      </select>
+                  <div id="region" class="region"></div>
+                  <button type="button" class="btn btn-success" id="region_done" disabled="disabled">区域选择完毕</button>
               </div>
               <br>
-
-              <div class="form-group">
-                  <label for="variable">变量</label>
-                  <select id="variable" name="variable" multiple="multiple">
-                      {% for var in variables %}
-                          <option value="{{ var }}">{{ var }}</option>
-                      {% endfor %}
-                      <optgroup label="The Griffins">
-                          <option value="Peter">Peter Griffin</option>
-                          <option value="Lois">Lois Griffin</option>
-                          <option value="Chris">Chris Griffin</option>
-                          <option value="Meg">Meg Griffin</option>
-                          <option value="Stewie">Stewie Griffin</option>
-                      </optgroup>
-                      <optgroup label="Peter's Friends">
-                          <option value="Cleveland">Cleveland Brown</option>
-                          <option value="Joe">Joe Swanson</option>
-                          <option value="Quagmire">Glenn Quagmire</option>
-                      </optgroup>
-                      <option value="Evil Monkey">Evil Monkey</option>
-                      <option value="Herbert">John Herbert</option>
-                  </select>
+              <div id = "variable_form">
+                  <div class="form-group" data-sol-name="character" id="variable_area">
+                      <label for="variable">变量</label>
+                      <select id="variable" name="variable" multiple="multiple">
+                      </select>
+                  </div>
               </div>
-              <button type="button" class="btn btn-primary">提交</button>
+              <input type="hidden" name="hregion" id="hregion" value="" />
+              <button type="submit" class="btn btn-success" id="to_be_submit" disabled="disabled">提交</button>
           </form>
         </div>
       </div>
@@ -167,27 +153,14 @@
         <p>&copy; 华东理工商学院 2015</p>
       </footer>
     </div>
-    <script type="text/javascript" src="../flaskweb/static/js/multiple-select.js"></script>
-    <script type="text/javascript" src="../flaskweb/static/js/jquery.tree-multiselect.min.js"></script>
-    <script type="text/javascript" src="../flaskweb/static/js/sol.js"></script>
-    <script>
-        $("select#period").multipleSelect({
-            placeholder: "年份",
-            width: 180
-        });
-        $("select#region").treeMultiselect({
-               startCollapsed : true
-        });
-        $("select#variable").searchableOptionList({
-            showSelectAll: true,
-            maxHeight: '250px'
-        });
-    </script>
-
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-dataquery.js"}}"></script>
 </body>
 </html>

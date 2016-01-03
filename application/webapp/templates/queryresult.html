@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta name="description" content="十一维数据平台">
+  <meta name="author" content="plutoese">
+  <!-- Bootstrap core CSS -->
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="navbar.css" rel="stylesheet">
+  <title>数据查询结果</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1 class="text-center">查询结果</h1>
+      <p class="lead"></p>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="{{ url_for('myapp.provincedataquery')}}">返回查询</a></li>
+          <li role="presentation" class="active"><a href="#">保存</a></li>
+          <li role="presentation" class="active"><a href="{{ url_for('myapp.exceloutput')}}">输出Excel文件</a></li>
+        </ul>
+      </div>
+      <br>
+      <div class="row">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Header</th>
+              <th>Header</th>
+              <th>Header</th>
+              <th>Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1,001</td>
+              <td>Lorem</td>
+              <td>ipsum</td>
+              <td>dolor</td>
+              <td>sit</td>
+            </tr>
+            <tr>
+              <td>1,002</td>
+              <td>amet</td>
+              <td>consectetur</td>
+              <td>adipiscing</td>
+              <td>elit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr>
+    <footer>
+      <p>&copy; 华东理工商学院 2015</p>
+    </footer>
+  </div>
+</body>
+</html>

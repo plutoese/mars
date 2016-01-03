@@ -1,6 +1,6 @@
 # coding=UTF-8
 
-from flask import Blueprint, render_template, request, url_for, jsonify
+from flask import Blueprint, render_template, request, url_for, jsonify, redirect
 
 myapp = Blueprint('myapp', __name__)
 
@@ -19,12 +19,15 @@ def updatedlog():
 def provincedataquery():
     # 设置数据
     period = range(1990,2015)
-    regions = [['110100','浙江','温州']]
-    variables = ['国内生产总值','财政收入']
     if request.method == 'POST':
         form_data = request.form
         print(form_data)
-    return render_template("provincedataquery.html",period=period,regions=regions,variables=variables)
+        return render_template("queryresult.html")
+    return render_template("query.html",period=period)
+
+@myapp.route('/exceloutput')
+def exceloutput():
+    return redirect('/static/file/result.xlsx')
 
 # 省级数据查询
 @myapp.route('/query',methods=['GET', 'POST'])
@@ -34,6 +37,7 @@ def query():
     if request.method == 'POST':
         form_data = request.form
         print(form_data)
+        return render_template("queryresult.html")
     return render_template("query.html",period=period)
 
 @myapp.route('/ajaxtwo', methods=['POST','GET'])
