@@ -45,7 +45,7 @@ $(document).ready(function(){
 	                	// 设置区域表单
 	                	$('#region').treeview({
 	                		// 设置区域数据
-	                    	data: data.regions[1],
+	                    	data: data.regions,
 	                    	multiSelect: true,
 	                    	// 定义区域表单中的节点选择，如何选择某个节点，则全选下属一级节点
 	                    	onNodeSelected: function(event,node){
@@ -106,7 +106,8 @@ $(document).ready(function(){
             var region_choosen = [];
             var i = 0;
             $.each(region_nodes, function (index, value) {
-                region_choosen[i] = value['text'];
+                //region_choosen[i] = value['text'];
+                region_choosen[i] = value['tags'][0];
                 i += 1;
             });
 
@@ -121,7 +122,10 @@ $(document).ready(function(){
                 period_selected: period_choosen
             }, function (data) {
                 $("select#variable").searchableOptionList({
-                    data: data.variables
+                    data: data.variables,
+                    showSelectionBelowList: true,
+                    showSelectAll: true,
+                    maxHeight: '250px'
                 });
             });
             $('#to_be_submit').removeAttr('disabled');

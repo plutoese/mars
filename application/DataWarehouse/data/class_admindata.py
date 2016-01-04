@@ -29,8 +29,8 @@
 # -----------------------------------------------------------------------------------------
 
 import re
-from application.DataWarehouse.data.class_data import Data
-from application.DataWarehouse.database.class_admindatabase import AdminDatabase
+from DataWarehouse.data.class_data import Data
+from DataWarehouse.database.class_admindatabase import AdminDatabase
 from pymongo import ASCENDING
 
 class AdminData:
@@ -242,6 +242,8 @@ if __name__ == '__main__':
 
     print(adata[u'浙江','b'])
     print(adata[u'浙江',u'嘉兴',u'孩孩'])
+    provinces = {item['acode']:item['region'] for item in adata.Province}
+    print(provinces)
 
     adata.setYear(2010)
     print(adata[tuple([u'浙江',u'f'])])

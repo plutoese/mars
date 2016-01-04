@@ -13,7 +13,7 @@
 #                  是版本的列表。
 # -----------------------------------------------------------------------------------------
 
-from application.DataWarehouse.database.class_database import Database
+from DataWarehouse.database.class_database import Database
 from pymongo import ASCENDING
 
 class AdminDatabase(Database):

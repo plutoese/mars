@@ -24,7 +24,7 @@
     <div class="container">
       <div class="row">
         <ul class="nav nav-pills">
-          <li role="presentation" class="active"><a href="{{ url_for('myapp.provincedataquery')}}">返回查询</a></li>
+          <li role="presentation" class="active"><a href="{{ url_for('myapp.query')}}">返回查询</a></li>
           <li role="presentation" class="active"><a href="#">保存</a></li>
           <li role="presentation" class="active"><a href="{{ url_for('myapp.exceloutput')}}">输出Excel文件</a></li>
         </ul>
@@ -34,28 +34,19 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
-              <th>Header</th>
+              {% for head in header %}
+                <th>{{ head }}</th>
+              {% endfor %}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td>dolor</td>
-              <td>sit</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td>adipiscing</td>
-              <td>elit</td>
-            </tr>
+            {% for rowdata in data %}
+              <tr>
+              {% for udata in rowdata %}
+                <td>{{ udata }}</td>
+              {% endfor %}
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
