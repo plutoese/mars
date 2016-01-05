@@ -139,6 +139,8 @@ class ProvinceStatisticsDatabase(Database):
                 columns.extend(main_columns)
 
             table_data = []
+            my_data = my_data.dropna(how='all')
+            my_data = my_data.fillna('')
             for i in range(len(my_data.index.tolist())):
                 tmp_record = my_data.index.tolist()[i]
                 if isinstance(tmp_record,tuple):

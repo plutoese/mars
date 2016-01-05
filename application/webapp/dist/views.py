@@ -4,7 +4,9 @@ import re
 import uuid
 from flask import Blueprint, render_template, request, url_for, jsonify, redirect, session
 from webapp.dist.lib.Index.class_ProvinceStatIndex import ProvinceStatIndex
+from webapp.dist.lib.Index.class_CEICindex import CEICIndex
 from webapp.dist.lib.database.class_ProvinceStatisticsDatabase import ProvinceStatisticsDatabase
+from webapp.dist.lib.database.class_CEICDatabase import CEICDatabase
 from webapp.dist.lib.file.class_Excel import Excel
 
 myapp = Blueprint('myapp', __name__)
@@ -23,12 +25,62 @@ def updatedlog():
 @myapp.route('/provincedataquery',methods=['GET', 'POST'])
 def provincedataquery():
     # 设置数据
-    period = range(1990,2015)
+    period = range(1978,2014)
+    db = ProvinceStatisticsDatabase()
+
     if request.method == 'POST':
         form_data = request.form
-        print(form_data)
-        return render_template("queryresult.html")
-    return render_template("query.html",period=period)
+        period_chosen = form_data.getlist('period')
+        region_chosen = re.split(',',form_data.getlist('hregion')[0])
+        variables_chosen = form_data.getlist('variable')
+
+        conds = {'region':region_chosen,'year':period_chosen,'variable':variables_chosen}
+        mdata = db.find(conds)
+        header = mdata['header']
+        data = mdata['data']
+        fdata = [header]
+        fdata.extend(data)
+
+        filename = str(uuid.uuid1()) + '.xlsx'
+        session['filename'] = filename
+        outfile = 'E:\\gitwork\\application\\webapp\\static\\file\\' + filename
+        moutexcel = Excel(outfile)
+        moutexcel.new().append(fdata,'mysheet')
+        moutexcel.close()
+
+        return render_template("queryresult.html",header=header,data=data)
+    return render_template("provincedataquery.html",period=period)
+
+@myapp.route('/prefecturedataquery',methods=['GET', 'POST'])
+def prefecturedataquery():
+    # 设置数据
+    period = range(2000,2015)
+    db = CEICDatabase()
+
+    if request.method == 'POST':
+        form_data = request.form
+        period_chosen = form_data.getlist('period')
+        region_chosen = re.split(',',form_data.getlist('hregion')[0])
+        variables_chosen = form_data.getlist('variable')
+
+        conds = {'region':region_chosen,'year':period_chosen,'variable':variables_chosen}
+        mdata = db.find(conds)
+        header = mdata['header']
+        data = mdata['data']
+        fdata = [header]
+        fdata.extend(data)
+
+        print(fdata)
+        filename = str(uuid.uuid1()) + '.xlsx'
+        session['filename'] = filename
+        outfile = 'E:\\gitwork\\application\\webapp\\static\\file\\' + filename
+        moutexcel = Excel(outfile)
+        moutexcel.new().append(fdata,'mysheet')
+        moutexcel.close()
+
+        return render_template("queryresult.html",header=header,data=data)
+    return render_template("prefecturedataquery.html",period=period)
+
 
 @myapp.route('/exceloutput')
 def exceloutput():
@@ -121,4 +173,20 @@ def from_region_get_variables():
     years = request.values.getlist('period_selected[]')
     # 这里要调用函数，通过时期和区域获得变量
     variable_generated = ProvinceStatisticsDatabase().get_variables_from_period_regions(years,regions)
+    return jsonify(variables=variable_generated)
+
+@myapp.route('/_prefeture_from_year_get_regions',methods=['POST','GET'])
+def prefeture_from_year_get_regions():
+    period_done = request.values.getlist('period_done[]')
+    print(period_done)
+    # 这里要调用函数，通过时期获取变量
+    region_generated = CEICIndex().get_regions_by_years(period_done)
+    return jsonify(regions=region_generated)
+
+@myapp.route('/_prefeture_from_region_get_variables',methods=['POST','GET'])
+def prefeture_from_region_get_variables():
+    regions = request.values.getlist('region_selected[]')
+    years = request.values.getlist('period_selected[]')
+    # 这里要调用函数，通过时期和区域获得变量
+    variable_generated = CEICDatabase().get_variables_from_period_regions(years,regions)
     return jsonify(variables=variable_generated)

@@ -20,7 +20,7 @@
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
 
-    <title>省级区域数据查询</title>
+    <title>地级区域数据查询</title>
 </head>
 
 <body>
@@ -45,8 +45,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">全国数据</a></li>
-                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
-                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
+                  <li><a href="#">省级数据</a></li>
+                  <li><a href="#">地级数据</a></li>
                   <li><a href="#">县级数据</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">城市数据</a></li>
@@ -106,7 +106,7 @@
               </dl>
               <dl>
                 <dt>2. 选择省份</dt>
-                <dd>在树形菜单中勾选感兴趣的省份，选择完毕点击区域选择完毕按钮。</dd>
+                <dd>在树形菜单中勾选感兴趣的地级区域，选择完毕点击区域选择完毕按钮。</dd>
               </dl>
               <dl>
                 <dt>3. 选择变量</dt>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="col-md-9">
-          <h3>欢迎使用省级数据查询！</h3>
+          <h3>欢迎使用地级数据查询！</h3>
           <br>
           <form method="POST">
               <div class="form-group">
@@ -161,6 +161,6 @@
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
-    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-provincedataquery.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-prefecturedataquery.js"}}"></script>
 </body>
 </html>
