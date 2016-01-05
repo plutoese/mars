@@ -80,7 +80,6 @@ class CityStatDatabase(Database):
                     conditions['acode'] = {'$in': conds['region']}
                 else:
                     conditions['acode'] = {'$in':[region['acode'] for item in conds['region'] for region in self.ad[tuple(item)]]}
-                #print(conditions['acode'])
                 result.extend(list(self.collection.find(conditions,projection).sort(sorts)))
             mresult = pd.DataFrame(result)
         else:

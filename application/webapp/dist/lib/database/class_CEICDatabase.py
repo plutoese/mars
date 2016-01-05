@@ -58,7 +58,7 @@ class CEICDatabase(Database):
         # 设置projection
         projection = conds.get('projection')
         if projection is None:
-            projection = {'region':1,'year':1,'value':1,'acode':1,'_id':0,'variable':1}
+            projection = {'region':1,'year':1,'value':1,'acode':1,'_id':0,'variable':1,'unit':1}
         else:
             conds.pop('projection')
         # 设置sorts
@@ -107,13 +107,20 @@ class CEICDatabase(Database):
         mresult = mresult.drop_duplicates(keep='last')
         cols = mresult.columns.tolist()
         print(cols)
+        var_unit_dict = dict(zip(mresult.variable,mresult.unit))
         mresult.columns = pd.Index(cols)
         if toStandardForm:
             rformat = RegionFormat(mresult)
             my_result = rformat.transform()
             my_data = my_result['data']
 
-            main_columns = my_data.columns.tolist()
+            main_columns = []
+            for item in my_data.columns.tolist():
+                if var_unit_dict.get(item) is None:
+                    main_columns.append(item)
+                else:
+                    main_columns.append('('.join([item,var_unit_dict.get(item)])+')')
+            print(main_columns)
             if 'region' in main_columns:
                 main_columns[main_columns.index('region')] = u'区域'
             if 'sdata' in my_result.keys():
