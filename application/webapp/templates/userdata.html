@@ -20,7 +20,7 @@
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
 
-    <title>地级区域数据查询</title>
+    <title>用户数据</title>
 </head>
 
 <body>
@@ -45,8 +45,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">全国数据</a></li>
-                  <li><a href="#">省级数据</a></li>
-                  <li><a href="#">地级数据</a></li>
+                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
+                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
                   <li><a href="#">县级数据</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">城市数据</a></li>
@@ -71,7 +71,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="{{ url_for('myapp.aqiquery') }}">城市空气质量</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="{{ url_for('myapp.userdata') }}">用户数据</a></li>
+                  <li><a href="#">用户数据</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -96,60 +96,28 @@
     </div> <!-- /container -->
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-         <ul class="nav nav-pills nav-stacked">
-          <br>
-            <h4>数据查询步骤 <span class="label label-default">重要</span></h4>
-              <dl>
-                <dt>1. 选择时期</dt>
-                <dd>通过下列菜单勾选感兴趣的年份，年份选择可以不连续。</dd>
-              </dl>
-              <dl>
-                <dt>2. 选择省份</dt>
-                <dd>在树形菜单中勾选感兴趣的地级区域，选择完毕点击区域选择完毕按钮。</dd>
-              </dl>
-              <dl>
-                <dt>3. 选择变量</dt>
-                <dd>通过下列菜单选择变量，可以通过输入关键字缩小选择的范围，选择完毕请点击提交。</dd>
-              </dl>
-          </ul>
-        </div>
-
-        <div class="col-md-9">
-          <h3>欢迎使用地级数据查询！</h3>
-          <br>
-          <form method="POST">
-              <div class="form-group">
-                  <label for="period">时期</label>
-                  <select id="period" name="period" multiple="multiple">
-                      {% for year in period %}
-                          <option value="{{ year }}">{{ year }}</option>
-                      {% endfor %}
-                  </select>
-              </div>
-              <br>
-
-              <div class="form-group">
-                  <label for="region">区域</label>
-                  <div id="region" class="region"></div>
-                  <button type="button" class="btn btn-success" id="region_done" disabled="disabled">区域选择完毕</button>
-              </div>
-              <br>
-              <div id = "variable_form">
-                  <div class="form-group" data-sol-name="character" id="variable_area">
-                      <label for="variable">变量</label>
-                      <select id="variable" name="variable" multiple="multiple">
-                      </select>
-                  </div>
-              </div>
-              <input type="hidden" name="hregion" id="hregion" value="" />
-              <button type="submit" class="btn btn-success" id="to_be_submit" disabled="disabled">提交</button>
-          </form>
-        </div>
-      </div>
+       <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>数据集名称</th>
+              <th>上传者</th>
+              <th>点击进入</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rowdata in data %}
+              <form method="POST">
+              <tr>
+                <td>{{ rowdata[0] }}</td>
+                <td>{{ rowdata[1] }}</td>
+                <input type="hidden" name="file" value={{ rowdata[2] }} />
+                <td><button type="submit" class="btn btn-primary btn-xs">进入</button></td>
+              </tr>
+                </form>
+            {% endfor %}
+          </tbody>
+        </table>
       <hr>
-
       <footer>
         <p>&copy; 华东理工商学院 2015</p>
       </footer>
@@ -162,6 +130,6 @@
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
-    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-prefecturedataquery.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-provincedataquery.js"}}"></script>
 </body>
 </html>

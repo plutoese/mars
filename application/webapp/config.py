@@ -13,3 +13,4 @@ class DevelopmentConfig(BaseConfig):
     "开发性配置"
     DEBUG = True
     SECRET_KEY = 'Another random secret key'
+

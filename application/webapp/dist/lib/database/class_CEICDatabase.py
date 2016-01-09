@@ -104,6 +104,9 @@ class CEICDatabase(Database):
         if mresult is None:
             return None
 
+        if len(mresult.values) < 1:
+            return None
+
         mresult = mresult.drop_duplicates(keep='last')
         cols = mresult.columns.tolist()
         print(cols)

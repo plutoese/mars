@@ -115,6 +115,9 @@ class ProvinceStatisticsDatabase(Database):
         if mresult is None:
             return None
 
+        if len(mresult.values) < 1:
+            return None
+
         mresult = mresult.drop_duplicates(keep='last')
         cols = mresult.columns.tolist()
         cols[cols.index('province')] = 'region'
@@ -178,7 +181,7 @@ if __name__ == '__main__':
     print(db.variable)
     print(db.get_variables_from_period_regions(range(1980,1982),['110000','120000','000000']))
     projection = {'province':1,'year':1,'value':1,'acode':1,'_id':0,'variable':1}
-    conds = {'region':['110000','120000','000000'],'year':['1988','1989'],'variable':[u'县',u'城镇就业人数']}
+    conds = {'region':['110000','120000','000000'],'year':['1988','1989'],'variable':[]}
     mdata = db.find(conds)
     print('-----------------------------')
     if 'pdata' in mdata.keys():

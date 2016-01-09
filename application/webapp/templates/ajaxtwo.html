@@ -1,39 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="十一维数据平台">
+    <meta name="author" content="plutoese">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <title></title>
-    <script type="text/javascript">
-      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/pikaday.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
 
+    <title>空气质量数据查询</title>
 </head>
 <body>
-    <script type="text/javascript">
-      $(function() {
-        var submit_form = function() {
-          $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
-            a: $('input[name="a"]').val(),
-            b: $('input[name="b"]').val()
-          }, function(data) {
-            $('#result').text(data.result);
-            $('input[name=a]').focus().select();
-          });
-          return false;
-        };
+    <div class="container">
 
-        $('input[name=b]').bind('change', submit_form);
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">十一维数据平台</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="{{ url_for('myapp.updatedlog') }}">首页</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">全国数据</a></li>
+                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
+                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
+                  <li><a href="#">县级数据</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">城市数据</a></li>
+                    <li><a href="#">混合区域数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">微观数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">CGSS数据</a></li>
+                  <li><a href="#">CHIPS数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">企业数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">工业企业数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定制数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">城市空气质量</a></li>
+                  <li><a href="#">大学高考录取线</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据分析工具箱<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">探索性数据分析</a></li>
+                  <li><a href="#">空间数据可视化</a></li>
+                  <li role="separator" class="divider"></li>
+                    <li><a href="#">机器学习</a></li>
+                    <li><a href="#">空间回归模型</a></li>
+                    <li><a href="#">计量回归模型</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="../navbar-static-top/">帮助文档</a></li>
+              <li><a href="../navbar-static-top/">上传数据</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+    </div> <!-- /container -->
 
-        $('input[name=a]').focus();
-      });
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+         <ul class="nav nav-pills nav-stacked">
+          <br>
+            <h4>数据查询步骤 <span class="label label-default">重要</span></h4>
+              <dl>
+                <dt>1. 选择时期</dt>
+                <dd>通过下列菜单勾选感兴趣的年份，年份选择可以不连续。</dd>
+              </dl>
+              <dl>
+                <dt>2. 选择省份</dt>
+                <dd>在树形菜单中勾选感兴趣的省份，选择完毕点击区域选择完毕按钮。</dd>
+              </dl>
+              <dl>
+                <dt>3. 选择变量</dt>
+                <dd>通过下列菜单选择变量，可以通过输入关键字缩小选择的范围，选择完毕请点击提交。</dd>
+              </dl>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <h3>欢迎使用空气质量数据查询！</h3>
+          <br>
+          <form method="POST">
+              <div class="form-group">
+                    <label for="startpick">起始日期</label>
+                    <input type="text" class="form-control" id="startpick" name="startpick">
+              </div>
+              <div class="form-group">
+                <label for="endpick">起始日期</label>
+                <input type="text" class="form-control" id="endpick" name="endpick">
+              </div>
+              <br>
+              <div id = "variable_form">
+                  <div class="form-group" data-sol-name="character" id="variable_area">
+                      <label for="city">城市</label>
+                      <select id="city" name="city" multiple="multiple">
+                        {% for scity in cities %}
+                          <option value="{{ scity }}">{{ scity }}</option>
+                        {% endfor %}
+                      </select>
+                  </div>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-success" id="to_be_submit">提交</button>
+          </form>
+        </div>
+      </div>
+      <hr>
+
+      <footer>
+        <p>&copy; 华东理工商学院 2015</p>
+      </footer>
+    </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/moment.min.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pikaday.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-aqidatepick.js"}}"></script>
+    <script>
+        // 设置初始的变量表单
+        $("select#city").searchableOptionList({
+            showSelectAll: true,
+            maxHeight: '250px'
+        });
     </script>
-    <h1>jQuery Example</h1>
-    <p>
-      <input type="text" size="5" name="a"> +
-      <input type="text" size="5" name="b"> =
-      <span id="result">?</span>
-    <p><a href=# id="calculate">calculate server side</a>
 </body>
 </html>

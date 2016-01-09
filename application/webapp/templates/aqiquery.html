@@ -13,16 +13,14 @@
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/multiple-select.css"}}">
-    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/bootstrap-treeview.min.css"}}">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/pikaday.css"}}">
     <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
     <script>
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
 
-    <title>地级区域数据查询</title>
+    <title>空气质量数据查询</title>
 </head>
-
 <body>
     <div class="container">
 
@@ -45,8 +43,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">全国数据</a></li>
-                  <li><a href="#">省级数据</a></li>
-                  <li><a href="#">地级数据</a></li>
+                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
+                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
                   <li><a href="#">县级数据</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">城市数据</a></li>
@@ -69,7 +67,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定制数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="{{ url_for('myapp.aqiquery') }}">城市空气质量</a></li>
+                  <li><a href="#">城市空气质量</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href="{{ url_for('myapp.userdata') }}">用户数据</a></li>
                 </ul>
@@ -88,7 +86,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="../navbar-static-top/">帮助文档</a></li>
-              <li><a href="{{ url_for('myapp.fileupload') }}">上传数据</a></li>
+              <li><a href="../navbar-static-top/">上传数据</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -107,7 +105,7 @@
               </dl>
               <dl>
                 <dt>2. 选择省份</dt>
-                <dd>在树形菜单中勾选感兴趣的地级区域，选择完毕点击区域选择完毕按钮。</dd>
+                <dd>在树形菜单中勾选感兴趣的省份，选择完毕点击区域选择完毕按钮。</dd>
               </dl>
               <dl>
                 <dt>3. 选择变量</dt>
@@ -117,34 +115,30 @@
         </div>
 
         <div class="col-md-9">
-          <h3>欢迎使用地级数据查询！</h3>
+          <h3>欢迎使用空气质量数据查询！</h3>
           <br>
           <form method="POST">
               <div class="form-group">
-                  <label for="period">时期</label>
-                  <select id="period" name="period" multiple="multiple">
-                      {% for year in period %}
-                          <option value="{{ year }}">{{ year }}</option>
-                      {% endfor %}
-                  </select>
+                    <label for="startpick">起始日期</label>
+                    <input type="text" class="form-control" id="startpick" name="startpick">
               </div>
-              <br>
-
               <div class="form-group">
-                  <label for="region">区域</label>
-                  <div id="region" class="region"></div>
-                  <button type="button" class="btn btn-success" id="region_done" disabled="disabled">区域选择完毕</button>
+                <label for="endpick">起始日期</label>
+                <input type="text" class="form-control" id="endpick" name="endpick">
               </div>
               <br>
               <div id = "variable_form">
                   <div class="form-group" data-sol-name="character" id="variable_area">
-                      <label for="variable">变量</label>
-                      <select id="variable" name="variable" multiple="multiple">
+                      <label for="city">城市</label>
+                      <select id="city" name="city" multiple="multiple">
+                        {% for scity in cities %}
+                          <option value="{{ scity }}">{{ scity }}</option>
+                        {% endfor %}
                       </select>
                   </div>
               </div>
-              <input type="hidden" name="hregion" id="hregion" value="" />
-              <button type="submit" class="btn btn-success" id="to_be_submit" disabled="disabled">提交</button>
+              <br>
+              <button type="submit" class="btn btn-success" id="to_be_submit">提交</button>
           </form>
         </div>
       </div>
@@ -159,9 +153,16 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
-    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
-    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-prefecturedataquery.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/moment.min.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pikaday.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-aqidatepick.js"}}"></script>
+    <script>
+        // 设置初始的变量表单
+        $("select#city").searchableOptionList({
+            showSelectAll: true,
+            maxHeight: '250px'
+        });
+    </script>
 </body>
 </html>

@@ -5,189 +5,131 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="十一维数据平台">
+    <meta name="author" content="plutoese">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/multiple-select.css"}}">
     <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/bootstrap-treeview.min.css"}}">
     <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
     <script>
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
-    <title>jQuery</title>
-  </head>
-  <body>
+
+    <title>省级区域数据查询</title>
+</head>
+
+<body>
     <div class="container">
 
-        <div class="col-md-9">
-        <h3>欢迎使用省级数据查询！</h3>
-          <br>
-          <form method="POST">
-              <div class="form-group">
-                  <label for="period">时期</label>
-                  <p id="time_selected">选择的时期</p>
-                  <select id="period" name="period" multiple="multiple">
-                      {% for year in period %}
-                          <option value="{{ year }}">{{ year }}</option>
-                      {% endfor %}
-                  </select>
-              </div>
-              <br>
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">十一维数据平台</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="{{ url_for('myapp.updatedlog') }}">首页</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">全国数据</a></li>
+                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
+                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
+                  <li><a href="#">县级数据</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">城市数据</a></li>
+                    <li><a href="#">混合区域数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">微观数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">CGSS数据</a></li>
+                  <li><a href="#">CHIPS数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">企业数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">工业企业数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定制数据<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ url_for('myapp.aqiquery') }}">城市空气质量</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">用户数据</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据分析工具箱<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">探索性数据分析</a></li>
+                  <li><a href="#">空间数据可视化</a></li>
+                  <li role="separator" class="divider"></li>
+                    <li><a href="#">机器学习</a></li>
+                    <li><a href="#">空间回归模型</a></li>
+                    <li><a href="#">计量回归模型</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="../navbar-static-top/">帮助文档</a></li>
+              <li><a href="{{ url_for('myapp.fileupload') }}">上传数据</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+    </div> <!-- /container -->
 
-              <div class="form-group">
-                  <label for="region">区域</label>
-                  <p id="region_selected">选择的区域</p>
-                  <div id="region" class="region"></div>
-                  <button type="button" class="btn btn-success" id="region_done" disabled="disabled">区域选择完毕</button>
-              </div>
-              <br>
-              <div id = "variable_form">
-                  <div class="form-group" data-sol-name="character" id="variable_area">
-                      <label for="variable">变量</label>
-                      <p id="variable_selected">选择的变量</p>
-                      <select id="variable" name="variable" multiple="multiple">
-                      </select>
-                  </div>
-              </div>
-              <input type="hidden" name="hregion" id="hregion" value="" />
-              <button type="submit" class="btn btn-success" id="to_be_submit" disabled="disabled">提交</button>
-          </form>
-        </div>
-      </div>
-
+    <div class="container">
+       <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>数据集名称</th>
+              <th>上传者</th>
+              <th>点击进入</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rowdata in data %}
+              <form method="POST">
+              <tr>
+                <td>{{ rowdata[0] }}</td>
+                <td>{{ rowdata[1] }}</td>
+                <input type="hidden" name="file" value={{ rowdata[2] }} />
+                <td><button type="submit" class="btn btn-primary btn-xs">进入</button></td>
+              </tr>
+                </form>
+            {% endfor %}
+          </tbody>
+        </table>
+      <hr>
+      <footer>
+        <p>&copy; 华东理工商学院 2015</p>
+      </footer>
     </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/bootstrap-treeview.min.js"}}"></script>
     <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            // 初始设置
-            // 设置网站根目录
-
-
-            // 设置区域表单的初始数据
-            var region_defaultData = [
-                {
-                    text: '中国',
-                    tags:['100000'],
-                    selectable: false
-                }
-            ];
-            // 获取变量表单的html，存入变量$variable_form_html
-            var $variable_form_html = $("#variable_form").html();
-
-            // 初始化时期多选框
-            $("select#period").multipleSelect({
-                placeholder: "年份",
-                width: 180,
-                // 事件：关闭选择框
-                onClose: function() {
-                    // 获得选择的时期
-                    var period_choosen = $("select#period").multipleSelect('getSelects');
-
-                    if (period_choosen.length > 0) {
-                        // 通过ajax获得数据
-                        $.post($SCRIPT_ROOT + '/_from_year_get_regions', {
-                            period_done: period_choosen
-                        }, function (data) {
-                            // 设置区域表单
-                            $('#region').treeview({
-                                // 设置区域数据
-                                data: data.regions[1],
-                                multiSelect: true,
-                                // 定义区域表单中的节点选择，如何选择某个节点，则全选下属一级节点
-                                onNodeSelected: function (event, node) {
-                                    var $myselected = $(this);
-                                    if (node.state['expanded']) {
-                                        if (node['nodes']) {
-                                            // 选好选择所有的子节点
-                                            $.each(node['nodes'], function (index, value) {
-                                                $myselected.treeview('selectNode', [value['nodeId'], {silent: true}]);
-                                            });
-                                        }
-                                    }
-                                },
-                                // 定义区域表单中的节点选择，如何反选某个节点，则反选所有下属一级节点
-                                onNodeUnselected: function (event, node) {
-                                    var $myunselected = $(this);
-                                    if (!node.state['expanded']) {
-                                        if (node['nodes']) {
-                                            $.each(node['nodes'], function (index, value) {
-                                                $myunselected.treeview('unselectNode', [value['nodeId'], {silent: true}]);
-                                            });
-                                        }
-                                    }
-                                }
-                            });
-                            $('#region').treeview('uncheckAll', {silent: true});
-                            $('#region').treeview('collapseAll', {silent: true});
-                            $('#region_done').removeAttr('disabled');
-                        });
-                    }else{
-                        $('#region').treeview({
-                            data: region_defaultData,
-                        });
-                        $('#region_done').attr('disabled','disabled');
-                    }
-                },
-            });
-
-            // 设置初始的区域表单
-            $('#region').treeview({
-                data: region_defaultData,
-            });
-
-            // 设置初始的变量表单
-            $("select#variable").searchableOptionList({
-                showSelectAll: true,
-                maxHeight: '250px'
-            });
-
-            // 点击选择区域完成按钮
-            $('#region_done').click(function(){
-
-                // 获取时期和区域选择变量period_choosen和region_choosen
-                var region_nodes = $('#region').treeview('getSelected');
-
-                if (region_nodes.length > 0) {
-                    var period_choosen = $("select#period").multipleSelect('getSelects');
-                    var region_choosen = [];
-                    var i = 0;
-                    $.each(region_nodes, function (index, value) {
-                        region_choosen[i] = value['text'];
-                        i += 1;
-                    });
-
-                    // 重新设置变量表单，并复制
-                    $("#variable_area").remove();
-                    $("#variable_form").prepend($variable_form_html);
-                    $("#hregion").attr('value', region_choosen);
-
-                    // 通过ajax获得变量数据
-                    $.post($SCRIPT_ROOT + '/_from_region_get_variables', {
-                        region_selected: region_choosen,
-                        period_selected: period_choosen
-                    }, function (data) {
-                        $("select#variable").searchableOptionList({
-                            data: data.variables
-                        });
-                    });
-                    $('#to_be_submit').removeAttr('disabled');
-                }else{
-                    $("#variable_area").remove();
-                    $("#variable_form").prepend($variable_form_html);
-                    // 设置初始的变量表单
-                    $("select#variable").searchableOptionList({
-                        showSelectAll: true,
-                        maxHeight: '250px'
-                    });
-                    $('#to_be_submit').attr('disabled','disabled');
-                }
-            });
-
-        });
-
-    </script>
-  </body>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/pluto-provincedataquery.js"}}"></script>
+</body>
 </html>
