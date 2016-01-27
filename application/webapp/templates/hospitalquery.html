@@ -12,9 +12,14 @@
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <title>用户上传数据</title>
-</head>
+    <link href="navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/multiple-select.css"}}">
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 
+    <title>医院数据查询</title>
+</head>
 <body>
     <div class="container">
 
@@ -93,50 +98,53 @@
         <div class="col-md-3">
          <ul class="nav nav-pills nav-stacked">
           <br>
-            <h4>数据上传步骤 <span class="label label-default">重要</span></h4>
+            <h4>数据查询步骤 <span class="label label-default">重要</span></h4>
               <dl>
-                <dt>1. 填写数据集名称</dt>
-                <dd>此处必填。在文本框内填写数据集名称，请使用汉字或字母，不要使用其他字符。</dd>
+                <dt>1. 选择省份或者直辖市</dt>
+                <dd>通过下列菜单勾选感兴趣的省份或直辖市，可以多选。</dd>
               </dl>
               <dl>
-                <dt>2. 填写上传者</dt>
-                <dd>此处必填。在文本框内填写上传者名字，请使用汉字或字母，不要使用其他字符</dd>
+                <dt>2. 选择医院等级</dt>
+                <dd>在通过下列菜单勾选医院等级，可以多选。</dd>
               </dl>
               <dl>
-                <dt>3. 填写数据集描述</dt>
-                <dd>此处选填。在文本框内填写数据集的基本信息及备注信息。</dd>
-              </dl>
-              <dl>
-                <dt>4. 上传数据</dt>
-                <dd>请按照指定格式上传数据文件，格式为Excel文件，选择完毕请点击提交。</dd>
+                <dt>3. 选择医院类别</dt>
+                <dd>在通过下列菜单勾选医院类别，可以多选，选择完毕请点击提交。</dd>
               </dl>
           </ul>
         </div>
 
         <div class="col-md-9">
-          <h3>非常感谢上传您的数据！</h3>
+          <h3>欢迎使用医院数据查询！</h3>
           <br>
-          <form method="POST" enctype=multipart/form-data>
+          <form method="POST">
               <div class="form-group">
-                  <label for="dataset_name">数据集名称</label>
-                  <input type="text" class="form-control" name="dataset_name" required="required" placeholder="数据集名称">
+                  <label for="province">省直辖市</label>
+                  <select id="province" name="province" multiple="multiple">
+                      {% for p in province %}
+                          <option value="{{ p[0] }}">{{ p[1] }}</option>
+                      {% endfor %}
+                  </select>
               </div>
               <br>
-
               <div class="form-group">
-                  <label for="dataset_uploader">上传者</label>
-                  <input type="text" class="form-control" name="dataset_uploader" required="required" placeholder="上传者">
+                  <label for="hgrade">医院等级</label>
+                  <select id="hgrade" name="hgrade" multiple="multiple">
+                      {% for grade in hgrade %}
+                          <option value="{{ grade }}">{{ grade }}</option>
+                      {% endfor %}
+                  </select>
               </div>
               <br>
               <div class="form-group">
-                  <label for="dataset_description">数据集描述</label>
-                  <textarea class="form-control" rows="3" name="dataset_description"></textarea>
+                  <label for="htype">医院类别</label>
+                  <select id="htype" name="htype" multiple="multiple">
+                      {% for type in htype %}
+                          <option value="{{ type }}">{{ type }}</option>
+                      {% endfor %}
+                  </select>
               </div>
-              <div class="form-group">
-                <label for="exampleInputFile">文件上传</label>
-                <input type="file" id="exampleInputFile" name="file">
-                <p class="help-block">{{ status }}</p>
-              </div>
+              <br>
               <button type="submit" class="btn btn-success" id="to_be_submit">提交</button>
           </form>
         </div>
@@ -152,5 +160,21 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
+    <script>
+        // 设置初始的变量表单
+        $("select#province").multipleSelect({
+            placeholder: "省直辖市",
+            width: 240,
+        });
+        $("select#hgrade").multipleSelect({
+            placeholder: "医院等级",
+            width: 240,
+        });
+        $("select#htype").multipleSelect({
+            placeholder: "医院类别",
+            width: 240,
+        });
+    </script>
 </body>
 </html>

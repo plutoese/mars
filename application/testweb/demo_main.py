@@ -1,9 +1,9 @@
 # coding=UTF-8
 
 import os
-from lib.database.class_Database import Database
+from DataWarehouse.database.class_database import Database
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from application.DataWarehouse.data.class_regiondata import RegionData
+from DataWarehouse.data.class_regiondata import RegionData
 import json
 from bokeh.plotting import figure
 from bokeh.embed import components

@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <meta name="description" content="十一维数据平台">
+  <meta name="description" content="区域与公共数据平台">
   <meta name="author" content="plutoese">
   <!-- Bootstrap core CSS -->
   <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -24,8 +24,8 @@
     <div class="container">
       <div class="row">
         <ul class="nav nav-pills">
-          <li role="presentation" class="active"><a href="{{ url_for('myapp.updatedlog') }}">返回查询</a></li>
-          <li role="presentation" class="active"><a href="#">保存</a></li>
+          <li role="presentation" class="active"><a href="{{ url_for('myapp.updatedlog') }}">返回首页</a></li>
+          <li role="presentation" class="active"><a href="{{ url_for('myapp.savefile') }}">保存</a></li>
           <li role="presentation" class="active"><a href="{{ url_for('myapp.exceloutput')}}">输出Excel文件</a></li>
         </ul>
       </div>

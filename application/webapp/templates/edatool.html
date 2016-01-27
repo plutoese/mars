@@ -12,9 +12,16 @@
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <title>用户上传数据</title>
+    <link href="navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ request.script_root|safe + "/static/css/searchableOptionList.css"}}">
+    <script>
+        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-0.9.0.min.css" rel="stylesheet" type="text/css">
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.9.0.min.js"></script>
+    {{ script|safe }}
+    <title>探索性可视化分析</title>
 </head>
-
 <body>
     <div class="container">
 
@@ -91,54 +98,55 @@
     <div class="container">
       <div class="row">
         <div class="col-md-3">
-         <ul class="nav nav-pills nav-stacked">
+          <h4>探索性可视化</h4>
           <br>
-            <h4>数据上传步骤 <span class="label label-default">重要</span></h4>
-              <dl>
-                <dt>1. 填写数据集名称</dt>
-                <dd>此处必填。在文本框内填写数据集名称，请使用汉字或字母，不要使用其他字符。</dd>
-              </dl>
-              <dl>
-                <dt>2. 填写上传者</dt>
-                <dd>此处必填。在文本框内填写上传者名字，请使用汉字或字母，不要使用其他字符</dd>
-              </dl>
-              <dl>
-                <dt>3. 填写数据集描述</dt>
-                <dd>此处选填。在文本框内填写数据集的基本信息及备注信息。</dd>
-              </dl>
-              <dl>
-                <dt>4. 上传数据</dt>
-                <dd>请按照指定格式上传数据文件，格式为Excel文件，选择完毕请点击提交。</dd>
-              </dl>
-          </ul>
-        </div>
-
-        <div class="col-md-9">
-          <h3>非常感谢上传您的数据！</h3>
+          <label for="mydata">我的数据集</label>
+          <a class="btn btn-default" role="button" name="mydata" href="{{ url_for('myapp.mydataset') }}">进入</a>
           <br>
-          <form method="POST" enctype=multipart/form-data>
+          <br>
+          <form method="POST">
               <div class="form-group">
-                  <label for="dataset_name">数据集名称</label>
-                  <input type="text" class="form-control" name="dataset_name" required="required" placeholder="数据集名称">
-              </div>
-              <br>
-
-              <div class="form-group">
-                  <label for="dataset_uploader">上传者</label>
-                  <input type="text" class="form-control" name="dataset_uploader" required="required" placeholder="上传者">
-              </div>
-              <br>
-              <div class="form-group">
-                  <label for="dataset_description">数据集描述</label>
-                  <textarea class="form-control" rows="3" name="dataset_description"></textarea>
+                  <label for="edatools">可视化工具选择</label>
+                  <select id="edatools" name="edatools" class="form-control">
+                      <option value="1">条形图</option>
+                      <option value="2">时序图</option>
+                      <option value="3">散点图</option>
+                  </select>
               </div>
               <div class="form-group">
-                <label for="exampleInputFile">文件上传</label>
-                <input type="file" id="exampleInputFile" name="file">
-                <p class="help-block">{{ status }}</p>
+                  <label for="xvar">变量X</label>
+                  <select id="xvar" name="xvar" class="form-control">
+                      <option value=0>没有选择</option>
+                      {% for var in variables %}
+                          <option value="{{ variables[var] }}">{{ variables[var] }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="yvar">变量Y</label>
+                  <select id="yvar" name="yvar" class="form-control">
+                      <option value=0>没有选择</option>
+                      {% for var in variables %}
+                          <option value="{{ variables[var] }}">{{ variables[var] }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="group">组别</label>
+                  <select id="group" name="group" class="form-control">
+                      <option value=0>没有选择</option>
+                      {% for var in variables %}
+                          <option value="{{ variables[var] }}">{{ variables[var] }}</option>
+                      {% endfor %}
+                  </select>
               </div>
               <button type="submit" class="btn btn-success" id="to_be_submit">提交</button>
           </form>
+        </div>
+
+        <div class="col-md-6">
+          <h3>可视化结果</h3>
+          {{ div|safe }}
         </div>
       </div>
       <hr>
@@ -152,5 +160,7 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/multiple-select.js"}}"></script>
+    <script type="text/javascript" src="{{ request.script_root|safe + "/static/js/sol.js"}}"></script>
+  </body>
 </html>

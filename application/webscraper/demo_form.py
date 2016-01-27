@@ -19,13 +19,15 @@ s = session.get("http://pythonscraping.com/pages/cookies/profile.php")
 print(s.text)
 
 
-driver = webdriver.PhantomJS(executable_path='D:/Tools/phantomjs-2.0.0-windows/bin/phantomjs')
+driver = webdriver.PhantomJS(executable_path='D:/Software/phantomjs-2.0.0-windows/bin/phantomjs')
 driver.get("http://pythonscraping.com/pages/javascript/ajaxDemo.html")
 time.sleep(3)
 print(driver.find_element_by_id("content").text)
 driver.close()
 
-
+params = {'organid': '7180', 'htype': 'A1', 'hgrade': '1', 'hclass': '1'}
+r = requests.post("https://www.hqms.org.cn/usp/roster/index.jsp", data=params)
+print(r.text)
 
 
 

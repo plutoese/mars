@@ -8,12 +8,16 @@ from webapp.dist.lib.Index.class_ProvinceStatIndex import ProvinceStatIndex
 from webapp.dist.lib.Index.class_CEICindex import CEICIndex
 from webapp.dist.lib.database.class_ProvinceStatisticsDatabase import ProvinceStatisticsDatabase
 from webapp.dist.lib.database.class_CEICDatabase import CEICDatabase
+from webapp.dist.lib.database.class_HospitalDatabase import HospitalDatabase
 from webapp.dist.lib.file.class_Excel import Excel
 from webapp.dist.lib.database.class_AQIDatabase import AQIDatabase
 import flask.ext.login as flask_login
 from webapp.dist.models import TEMP_FILE_FOLDER, allowed_file, RegionQueryAndSave, UPLOAD_FOLDER
-from webapp.dist.models import make_upload_file_name, UploadFile
+from webapp.dist.models import make_upload_file_name, UploadFile, BokehGraph, LoadData
 from werkzeug.utils import secure_filename
+
+from bokeh.plotting import figure
+from bokeh.embed import components
 
 myapp = Blueprint('myapp', __name__)
 
@@ -137,6 +141,21 @@ def exceloutput():
         return redirect(saved_file)
     return render_template("queryresult.html")
 
+# 保存文件
+@myapp.route('/savefile')
+@flask_login.login_required
+def savefile():
+    session['savedfile'] = ''.join([TEMP_FILE_FOLDER,session['filename']])
+    return '数据集已经保存！'
+
+
+# 我的数据集
+@myapp.route('/mydataset')
+@flask_login.login_required
+def mydataset():
+    up_file = UploadFile()
+    mdata = up_file.get_excel_data(session['savedfile'])
+    return render_template("queryresult.html", header=mdata.get('header'), data=mdata.get('data'))
 
 @myapp.route('/fileupload', methods=['POST', 'GET'])
 @flask_login.login_required
@@ -151,7 +170,7 @@ def fileupload():
             return render_template('fileupload.html', status="文件上传成功")
     return render_template('fileupload.html')
 
-
+# 用户数据
 @myapp.route('/userdata', methods=['POST', 'GET'])
 @flask_login.login_required
 def userdata():
@@ -197,6 +216,60 @@ def query():
         return render_template("queryresult.html", header=header, data=data)
     return render_template("query.html", period=period)
 
+# 可视化
+@myapp.route("/bokeh")
+def bokeh():
+
+    file = 'd:/temp/airquality.xlsx'
+    ldata = LoadData(file)
+    bgraph = BokehGraph(ldata.load())
+    #result = bgraph.bar_plot('AQI指数','city')
+    #result = bgraph.scatter('PM10','PM25','city')
+    result = bgraph.line_plot(xvar='日期',yvar='AQI指数',group={'city':['上海','北京','三亚']},timeseries=True)
+
+    return render_template('bokehexample.html',script=result['script'],div=result['div'])
+
+# 探索性可视化
+@myapp.route("/edatool", methods=['GET', 'POST'])
+@flask_login.login_required
+def edatool():
+    ldata = LoadData(session['savedfile'])
+    data_loaded = ldata.load()
+    bgraph = BokehGraph(data_loaded)
+    variables = data_loaded.get('header')
+    if request.method == 'POST':
+        choice = request.form.get('edatools')
+        xvar = request.form.get('xvar')
+        yvar = request.form.get('yvar')
+        group = request.form.get('group')
+        print(request.form)
+        if choice == '1':
+            if xvar == '0':
+                return "没有选择变量"
+            else:
+                if group == '0':
+                    result = bgraph.bar_plot(xvar)
+                else:
+                    result = bgraph.bar_plot(xvar,group)
+        elif choice == '2':
+            if xvar == '0' or yvar == '0':
+                return "没有选择变量"
+            else:
+                if group == '0':
+                    result = bgraph.line_plot(xvar=xvar,yvar=yvar,timeseries=True)
+                else:
+                    result = bgraph.line_plot(xvar=xvar,yvar=yvar,group=group,timeseries=True)
+        else:
+            if xvar == '0' or yvar == '0':
+                return "没有选择变量"
+            else:
+                if group == '0':
+                    result = bgraph.scatter(xvar,yvar)
+                else:
+                    result = bgraph.scatter(xvar,yvar,group)
+        return render_template('edatool.html',variables=variables,script=result['script'],div=result['div'])
+    return render_template('edatool.html',variables=variables)
+
 
 # 空气质量指数数据
 @myapp.route('/aqiquery', methods=['POST', 'GET'])
@@ -216,6 +289,43 @@ def aqiquery():
         return render_template("queryresult.html", header=mdata.get('header'), data=mdata.get('data'))
     return render_template('aqiquery.html', cities=db.city)
 
+
+# 空气质量指数数据
+@myapp.route('/hospitalquery', methods=['POST', 'GET'])
+@flask_login.login_required
+def hospitalquery():
+    db = HospitalDatabase()
+    province_list = [[id,db.Province_dict[id]]for id in db.provinceid]
+    if request.method == 'POST':
+        conds = {'region': request.form.getlist('province'),
+                 '医院等级': request.form.getlist('hgrade'),
+                 '医院类别': request.form.getlist('htype')}
+        print(conds)
+        region_query = RegionQueryAndSave(db, conds)
+        mdata = region_query.data
+        print(mdata)
+        filename = region_query.save_temp_file()
+        session['filename'] = filename
+        return render_template("queryresult.html", header=mdata.get('header'), data=mdata.get('data'))
+    return render_template('hospitalquery.html',province=province_list,hgrade=db.grade,htype=db.type)
+
+@myapp.route("/bdmap")
+def bdmap():
+    return render_template('bdmap.html')
+
+@myapp.route("/bdmapesda", methods=['POST', 'GET'])
+@flask_login.login_required
+def bdmapesda():
+    ldata = LoadData(session['savedfile'])
+    data_loaded = ldata.load()
+    variables = data_loaded.get('header')
+    mdata = data_loaded.get('data')
+    if request.method == 'POST':
+        choice = request.form.get('location')
+        print(choice)
+        print(mdata[choice])
+        return render_template('bdmapesda.html',variables=variables,locations=list(mdata[choice]))
+    return render_template('bdmapesda.html',variables=variables)
 
 @myapp.route('/ajaxtwo', methods=['POST', 'GET'])
 def ajaxtwo():

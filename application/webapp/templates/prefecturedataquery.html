@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="十一维数据平台">
+    <meta name="description" content="区域与公共数据平台">
     <meta name="author" content="plutoese">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -36,7 +36,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">十一维数据平台</a>
+            <a class="navbar-brand" href="#">区域与公共数据平台</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -45,8 +45,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">区域数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">全国数据</a></li>
-                  <li><a href="#">省级数据</a></li>
-                  <li><a href="#">地级数据</a></li>
+                  <li><a href="{{ url_for('myapp.provincedataquery') }}">省级数据</a></li>
+                  <li><a href="{{ url_for('myapp.prefecturedataquery') }}">地级数据</a></li>
                   <li><a href="#">县级数据</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">城市数据</a></li>
@@ -70,6 +70,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">定制数据<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{{ url_for('myapp.aqiquery') }}">城市空气质量</a></li>
+                  <li><a href="{{ url_for('myapp.hospitalquery') }}">省直辖市医院</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href="{{ url_for('myapp.userdata') }}">用户数据</a></li>
                 </ul>
@@ -77,8 +78,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据分析工具箱<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">探索性数据分析</a></li>
-                  <li><a href="#">空间数据可视化</a></li>
+                  <li><a href="{{ url_for('myapp.edatool') }}">探索性数据分析</a></li>
+                  <li><a href="{{ url_for('myapp.bdmapesda') }}">空间数据可视化</a></li>
                   <li role="separator" class="divider"></li>
                     <li><a href="#">机器学习</a></li>
                     <li><a href="#">空间回归模型</a></li>
@@ -106,7 +107,7 @@
                 <dd>通过下列菜单勾选感兴趣的年份，年份选择可以不连续。</dd>
               </dl>
               <dl>
-                <dt>2. 选择省份</dt>
+                <dt>2. 选择地级区域</dt>
                 <dd>在树形菜单中勾选感兴趣的地级区域，选择完毕点击区域选择完毕按钮。</dd>
               </dl>
               <dl>
